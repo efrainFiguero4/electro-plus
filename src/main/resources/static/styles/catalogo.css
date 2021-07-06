@@ -1,0 +1,79 @@
+.electroplus__cabecera {
+    background-color: white;
+    border-radius: 5px;
+}
+
+.electroplus__cabecera_title {
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.text-70 {
+    color: var(--electroplus-one-70);
+}
+
+.electroplus__items_title {
+    font-size: 19px;
+    color: var(--electroplus-one);
+}
+
+.electroplus__items_vertodo {
+    font-size: 16px;
+    color: var(--electroplus-one-70);
+    cursor: pointer;
+}
+
+.electroplus__items_vertodo:hover {
+    color: var(--electroplus-one);
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.item-titulo, .item-descuento {
+    font-size: 14px;
+    color: var(--electroplus-one-70);
+    margin-bottom: 0;
+}
+
+.item-descuento {
+    text-decoration: line-through;
+}
+
+.item-descripcion {
+    font-size: 14px;
+    color: var(--electroplus-one);
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.item-precio {
+    font-size: 16px;
+    color: var(--electroplus-one);
+    font-weight: 900;
+}
+
+.card {
+    transition: all .3s;
+    padding: .5rem;
+    border-radius: 8px !important;
+    cursor: pointer;
+    /*margin: 0 1rem 1rem 0;*/
+    box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+.card:hover {
+    box-shadow: 0 6px 10px rgb(0 0 0 / 15%);
+}
+
+.card-imagen {
+    height: 136px !important;
+    width: 156px !important;
+}
+
+.text-truncate-2 {
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}

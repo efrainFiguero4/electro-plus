@@ -1,0 +1,196 @@
+
+p {
+    color: var(--electroplus-gray);
+    line-height: 24px;
+}
+
+body.electroplus .electroplus__navbar {
+    padding: 0;
+    background-color: var(--electroplus-one);
+}
+
+body.electroplus .electroplus__navbar__container {
+    height: 75px;
+    align-items: stretch;
+}
+
+body.electroplus .electroplus__navbar__logo {
+    height: 100%;
+    margin: auto 0;
+    display: inline-block;
+    cursor: pointer;
+}
+
+body.electroplus .electroplus__navbar__link {
+    height: auto;
+    display: flex;
+    color: white;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+    /*margin-bottom: 1.5rem;*/
+}
+
+body.electroplus .nav-pills .nav-link {
+    position: relative;
+    border-radius: 0;
+    transition: all 0.3s;
+}
+
+body.electroplus .nav-pills .nav-link.desktop.active,
+body.electroplus .nav-pills .nav-link.desktop:hover,
+body.electroplus .nav-pills .nav-link.desktop:focus {
+    color: var(--electroplus-burple);
+}
+
+body.electroplus .nav-pills .nav-link.desktop::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--electroplus-burple);
+    transition: all 0.3s;
+    transform: scaleX(0);
+    transform-origin: 50% 50%;
+}
+
+body.electroplus .nav-pills .nav-link.desktop.active::before,
+body.electroplus .nav-pills .nav-link.desktop:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--electroplus-burple);
+    transform: scaleX(1);
+}
+
+body.electroplus .border-bottom {
+    border-bottom: 1px solid rgb(222 226 230 / 39%) !important;
+}
+
+.electroplus__menu__close {
+    padding: 0 1rem;
+    display: flex;
+    height: 75px;
+    min-height: 75px;
+    border-bottom: 1px solid #01943a;
+}
+
+.menu__header {
+    height: 75px;
+    min-height: 75px;
+    border-bottom: 1px solid var(--electroplus-one-cero);
+}
+
+.text-electroplus {
+    color: var(--electroplus-black);
+}
+
+.text-electroplus-second {
+    color: var(--electroplus-green);
+}
+
+.pointer {
+    pointer-events: none;
+}
+
+body.electroplus .carousel-indicators {
+    bottom: -30px;
+}
+
+.check-list {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+@keyframes fadeText {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeText {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 767.5px) {
+    .electroplus__menu__navbar {
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--electroplus-one);
+        height: 100%;
+        will-change: transform;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.86, 0.01, 0.77, 0.78);
+    }
+
+    .electroplus__menu__navbar.show {
+        transform: translateX(0);
+        transition: transform 0.3s cubic-bezier(0.82, 0.01, 0.77, 0.78);
+    }
+
+    .nav.nav-pills {
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+        padding-left: 1rem;
+        flex-direction: column;
+        padding-bottom: 16.4rem;
+    }
+
+    .electroplus__menu__navbar.show .nav.nav-pills li {
+        opacity: 0;
+        animation: fadeText 1s forwards;
+    }
+
+    .electroplus__menu__navbar.show .nav.nav-pills li:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .electroplus__menu__navbar.show .nav.nav-pills li:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .electroplus__menu__navbar.show .nav.nav-pills li:nth-child(4) {
+        animation-delay: 0.45s;
+    }
+
+    .electroplus__menu__navbar.show .nav.nav-pills li:nth-child(5) {
+        animation-delay: 0.6s;
+    }
+
+    .electroplus__menu__navbar.show .nav.nav-pills li:nth-child(6) {
+        animation-delay: 0.75s;
+    }
+}
+
+@media (max-width: 992px) and (min-width: 768px) {
+    body.electroplus .container {
+        max-width: 850px;
+    }
+}
+
+@media (min-width: 1200px) {
+    body.electroplus .container {
+        max-width: 1000px;
+    }
+}

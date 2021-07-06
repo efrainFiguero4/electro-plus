@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      th:replace="~{fragment/fragment :: fragment (~{::body},'catalogo')}">
+
+<body>
+<div class="bg-one" style="height: 7rem"></div>
+<div class="container" style="margin-top: -80px">
+    <div class="electroplus__cabecera mt-2">
+        <div class="d-flex justify-content-around align-items-center">
+            <div class="px-2">
+                <label class="electroplus__cabecera_title text-one">BIENVENIDO A SU TIENDA VIRTUAL</label>
+                <a sec:authorize="!isAuthenticated()" href="/public/cliente" class="btn btn-block btn-primary">Registrarme</a>
+                <small sec:authorize="!isAuthenticated()" class="text-one-70">Gana descuentos al registrarte</small>
+            </div>
+            <div>
+                <img th:src="@{/image/catalogo.svg}" alt="image_catalogo" style="margin-top: -8px">
+            </div>
+        </div>
+    </div>
+    <div class="electroplus__items py-4">
+        <div class="d-flex justify-content-between">
+            <label class="electroplus__items_title">Ofertas del día</label>
+            <!--a class="electroplus__items_vertodo" href="/productos">Ver todo</a-->
+        </div>
+        <div class="row no-gutters items">
+            <div class="col-6 col-sm-4 col-md-3 item" th:each="producto : ${productos}">
+                <div class="card border-0">
+                    <div class="d-flex justify-content-center">
+                        <div class="card-imagen">
+                            <img th:src="${producto.imagen}" class="card-img-top">
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <h5 class="card-title item-titulo text-uppercase text-truncate"
+                            th:text="${producto.nombre}"></h5>
+                        <p class="card-text item-descripcion text-truncate-2" th:text="${producto.descripcion}"></p>
+                        <p class="item-descuento" th:text="'S/. ' + ${producto.precioDescuento}"></p>
+                        <p class="item-precio" th:text="'S/. ' + ${producto.precio}"></p>
+                        <a th:href="@{/carrito/agregar/}+${producto.id}" class="btn btn-block btn-primary">
+                            Agregar a carrito
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

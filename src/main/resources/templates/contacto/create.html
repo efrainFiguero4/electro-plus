@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragment/fragment :: fragment (~{::body},'contactocrear')}">
+
+<body>
+<div class="bg-one" style="height: 7rem"></div>
+<div class="container" style="margin-top: -80px">
+    <div class="electroplus__cabecera mt-2" style="background-color: #E4F7FB !important;">
+        <div class="d-flex justify-content-around align-items-center">
+            <div class="px-3">
+                <p class="electroplus__cabecera_title text-one">¿ALGUNA DUDA? CONTÁCTANOS</p>
+                <small class="text-one-70">Estamos atentos a tus comentarios</small>
+            </div>
+            <div>
+                <img src="/image/producto.svg" alt="image_contacto" style="margin-top: -8px">
+            </div>
+        </div>
+    </div>
+    <div class="py-4">
+        <form th:object="${contacto}" th:action="@{/contacto}" method="POST">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="nombres" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="nombres" th:field="*{nombres}"/>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="apellidos" th:field="*{apellidos}"/>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="telefono" th:field="*{telefono}"/>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="correo" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="correo" th:field="*{correo}" required/>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="mensaje" class="form-label">Mensaje</label>
+                        <input type="text" class="form-control" id="mensaje" th:field="*{mensaje}"/>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Enviar Consulta
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

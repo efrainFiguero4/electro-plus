@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragment/fragment :: fragment (~{::body},'login')}">
+
+<body>
+<div class="bg-one" style="height: 7rem"></div>
+<div class="container" style="margin-top: -80px">
+    <div class="electroplus__cabecera mt-2" style="background-color: #E4F7FB !important;">
+        <div class="d-flex justify-content-around align-items-center">
+            <div class="px-3 text-center">
+                <label class="electroplus__cabecera_title text-one" th:text="${titulo}"></label>
+            </div>
+            <div class="px-3 text-center">
+                <img th:src="@{/image/login.svg}" alt="image_login" style="margin-top: -8px">
+            </div>
+        </div>
+    </div>
+
+    <form th:action="@{/login}" method="POST">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="form-group">
+                    <label for="username" class="form-label">Correo Electronico:</label>
+                    <input type="email" name="username" class="form-control" id="username"
+                           placeholder="Ingrese email" value="figueroa@gmail.com">
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="form-group">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" name="password" class="form-control" id="password"
+                           placeholder="Ingrese Contraseña" value="12345">
+                </div>
+            </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            </div>
+            <div class="col-12 text-center pt-3">
+                <a href="/public/cliente">Crear una cuenta</a>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

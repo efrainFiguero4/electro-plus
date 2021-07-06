@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      th:replace="~{fragment/fragment :: fragment (~{::body},'clientecrear')}">
+
+<body>
+<div class="bg-one" style="height: 7rem"></div>
+<div class="container" style="margin-top: -80px">
+
+    <div class="electroplus__cabecera mt-2" style="background-color: #E4F7FB !important;">
+        <div class="d-flex justify-content-around align-items-center">
+
+            <div class="px-3 text-center">
+                <label class="electroplus__cabecera_title text-one" th:text="${titulo}"></label>
+            </div>
+            <div>
+                <img th:src="@{/image/registrar.svg}" alt="image_catalogo" style="margin-top: -8px">
+            </div>
+        </div>
+    </div>
+    <div class="py-4">
+        <form th:action="@{/clientes/save}" th:object="${cliente}" method="POST">
+            <div class="row">
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{isUpdate}">
+                        <input type="hidden" th:field="*{codigoRole}">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" th:field="*{username} " class="form-control" id="username"
+                               placeholder="Email del usuario">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" th:field="*{nombre}" class="form-control" id="nombre"
+                               placeholder="Nombres del usuario">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="apellidos" class="form-label">Apellidos</label>
+                        <input type="text" th:field="*{apellidos}" class="form-control" id="apellidos"
+                               placeholder="Apellidos del usuario">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="rol" class="form-label">Rol</label>
+                        <select class="form-control" th:field="*{codigoRole}" required
+                                id="rol">
+                            <option th:each="role : ${roles}" th:value="${role.codigo}">
+                                <span th:text="${role.codigo}"></span>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" th:field="*{password} " class="form-control" id="password"
+                               placeholder="Contraseña del usuario">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="confirmarpassword" class="form-label">Confirmar Contraseña</label>
+                        <input type="text" th:field="*{confirmarpassword}" class="form-control" id="confirmarpassword"
+                               placeholder="">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <input type="submit" class="btn btn-primary btn-block" value="Guardar">
+                </div>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

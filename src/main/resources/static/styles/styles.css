@@ -1,0 +1,98 @@
+:root {
+    --electroplus-burple: #6726c4;
+    --electroplus-dark-burple: #5a21ac;
+    --electroplus-ligth-burple: #d9c2ff;
+    --electroplus-green: #00c44c;
+    --electroplus-dark-green: #00a23f;
+    --electroplus-ligth-green: #bbecc8;
+    --electroplus-black: #3f4047;
+    --electroplus-gray: #878993;
+    --electroplus-light-gray: #f5f6fa;
+
+    --electroplus-deley-animacion: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    --electroplus-one: #333C6D;
+    --electroplus-one-cero: #E5E7ED;
+    --electroplus-one-50: #B3B6C8;
+    --electroplus-one-70: #8085A;
+    --electroplus-verde: #45A00A;
+    --electroplus-two: #23BDDE;
+    --electroplus-azul: #1A1F71;
+
+    --primary: var(--electroplus-one) !important;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    background-color: transparent;
+    border-left: 1px solid transparent;
+    width: 0.55rem;
+    height: 0.55rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--electroplus-one);
+    border-radius: 1rem;
+    outline: 0.5rem solid transparent;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('roboto/Roboto-Regular.ttf');
+}
+
+body.electroplus {
+    overflow-x: hidden;
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    padding-top: 75px;
+    letter-spacing: 0.01rem;
+    background-color: var(--electroplus-one-cero);
+}
+
+.bg-one {
+    background-color: #333C6D;
+}
+
+.text-one {
+    color: var(--electroplus-one);
+}
+
+.text-one-70 {
+    color: var(--electroplus-one-70);
+}
+
+.btn-primary {
+    background-color: var(--electroplus-two) !important;
+    border-color: var(--electroplus-two) !important;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgb(38 255 255 / 22%) !important;
+}
+
+.form-label {
+    color: var(--electroplus-one);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-control {
+    border-color: var(--electroplus-one-cero) !important;
+}
+
+div.row.no-gutters.items>div.col-6.col-sm-4.col-md-3.item:last-of-type {
+    padding-left: 0 !important;
+}
+
+div.row.no-gutters.items>div.col-6.col-sm-4.col-md-3.item{
+    padding: 0.5rem;
+}
+
+.item:nth-child(3n) {
+    background: blue;
+}
