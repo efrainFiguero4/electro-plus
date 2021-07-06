@@ -16,7 +16,7 @@ spring:
       connection-test-query: SELECT 1
       minimum-idle: 1
       maximum-pool-size: 3
-
+      schema: electroplus
     initialization-mode: always
     data: classpath:data/categoria.sql,classpath:data/rol.sql,classpath:data/producto.sql
 
