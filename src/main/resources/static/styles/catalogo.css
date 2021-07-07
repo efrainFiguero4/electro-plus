@@ -58,7 +58,6 @@
     border-radius: 8px !important;
     cursor: pointer;
     /*margin: 0 1rem 1rem 0;*/
-    box-shadow: 0 0 1px 0 rgb(51 60 109);
 }
 
 .card:hover {

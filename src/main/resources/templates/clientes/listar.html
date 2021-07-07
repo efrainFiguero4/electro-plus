@@ -6,35 +6,32 @@
 <div class="bg-one" style="height: 7rem"></div>
 <div class="container" style="margin-top: -80px">
     <div class="electroplus__cabecera mt-2" style="background-color: #E4F7FB !important;">
-
         <div class="d-flex justify-content-around align-items-center">
-
             <div class="px-3 text-center">
-                <label class="electroplus__cabecera_title text-one" th:text="${titulo}"></label>
+                <label class="electroplus__cabecera_title text-one text-uppercase" th:text="${titulo}"></label>
             </div>
-
             <div>
                 <img th:src="@{/image/registrar.svg}" alt="image_catalogo" style="margin-top: -8px">
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-end py-2">
-        <a class="btn btn-primary btn-sm" th:href="@{/clientes/create}">
-            Nuevo Cliente
+        <a class="btn btn-primary" th:href="@{/clientes/create}">
+            <i class="feather icon-user-plus icon-xs pr-2"></i> NUEVO
         </a>
     </div>
     <div class="table-responsive">
         <table class="table">
             <thead class="table-info">
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nombres</th>
-                <th scope="col">Apellidos</th>
-                <th scope="col">Rol</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Contraseña</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Eliminar</th>
+                <th scope="col">#</th>
+                <th scope="col">NOMBRES</th>
+                <th scope="col">APELLIDOS</th>
+                <th scope="col">ROL</th>
+                <th scope="col">USUARIO</th>
+                <th scope="col">CONTRASEÑA</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -45,17 +42,18 @@
                 <td th:text="${cl.role.codigo}"></td>
                 <td th:text="${cl.username}"></td>
                 <td th:text="${cl.password}"></td>
-
                 <td>
                     <a class="btn btn-success btn-sm" th:href="@{/clientes/edit/}+ ${cl.id}"
-                       th:text="'Editar'" title="Editar Registro">
+                       title="Editar Registro">
+                        <i class="feather icon-edit icon-xs"></i>
                     </a>
                 </td>
 
                 <td>
                     <a class="btn btn-danger btn-sm" th:href="@{/clientes/delete/}+ ${cl.id}"
-                       th:text="'Eliminar'" title="Eliminar Registro"
+                       title="Eliminar Registro"
                        onclick="return confirm('Esta seguro de eliminar el registro?');">
+                        <i class="feather icon-trash-2 icon-xs"></i>
                     </a>
                 </td>
 

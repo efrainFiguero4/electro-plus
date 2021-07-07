@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pe.edu.utp.electroplus.config.UsuarioValidator;
 import pe.edu.utp.electroplus.model.Usuario;
 import pe.edu.utp.electroplus.model.Role;
+import pe.edu.utp.electroplus.repository.RoleRepository;
 import pe.edu.utp.electroplus.service.ClienteService;
 
 import java.security.Principal;
@@ -26,6 +27,7 @@ import static pe.edu.utp.electroplus.utils.Constants.MENSAJE;
 public class UsuarioController {
 
     private final ClienteService clienteService;
+    private final RoleRepository roleRepository;
     private final UsuarioValidator usuarioValidator;
 
     /**
@@ -68,7 +70,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario(false);
         List<Role> listadoRoles = clienteService.listarRoles();
 
-        model.addAttribute("titulo", "REGISTRAR CLIENTE");
+        model.addAttribute("titulo", "REGISTRAR USUARIO");
         model.addAttribute("cliente", usuario);
         model.addAttribute("roles", listadoRoles);
         return "clientes/formulario";
@@ -76,12 +78,22 @@ public class UsuarioController {
 
     @PostMapping("/clientes/save")
     public String guardar(@ModelAttribute Usuario cliente, BindingResult bindingResult, RedirectAttributes redirect) {
-        if (!Objects.isNull(cliente.getId())) cliente.setIsUpdate(true);
+        if (Objects.nonNull(cliente.getId())) {
+            cliente.setIsUpdate(true);
+            cliente.setCodigoRole(cliente.getRole().getCodigo());
+        }
+        else {
+            Usuario exist = clienteService.findByUsername(cliente.getUsername());
+            if (Objects.nonNull(exist)) {
+                redirect.addFlashAttribute(ERROR, "El usuario ya se encuentra registrado");
+                return "redirect:/clientes/create";
+            }
+        }
 
         usuarioValidator.validate(cliente, bindingResult);
         if (bindingResult.hasErrors()) {
             redirect.addFlashAttribute(ERROR, bindingResult.getAllErrors().get(0).getCode());
-            return "clientes/formulario";
+            return "redirect:/clientes/create";
         }
         String sms = Objects.isNull(cliente.getId()) ? "creado" : "actualizado";
         redirect.addFlashAttribute(MENSAJE, "Usuario " + sms + " correctamente.");
@@ -93,8 +105,9 @@ public class UsuarioController {
     public String editar(@PathVariable("id") Long idCliente, Model model) {
         Usuario usuario = clienteService.buscarPorId(idCliente);
         List<Role> listadoRoles = clienteService.listarRoles();
+        usuario.setCodigoRole(usuario.getRole().getCodigo());
 
-        model.addAttribute("titulo", "ACTUALIZAR CLIENTE");
+        model.addAttribute("titulo", "ACTUALIZAR USUARIO");
         model.addAttribute("cliente", usuario);
         model.addAttribute("roles", listadoRoles);
         return "clientes/formulario";
@@ -102,7 +115,6 @@ public class UsuarioController {
 
     @GetMapping("/clientes/delete/{id}")
     public String eliminar(@PathVariable("id") Long idCliente) {
-
         clienteService.eliminar(idCliente);
         System.out.println("Registro Eliminado:");
         return "redirect:/clientes/lista";

@@ -16,13 +16,14 @@
         </div>
     </div>
 
-    <form th:action="@{/login}" method="POST">
-        <div class="row needs-validation">
+    <form th:action="@{/login}" method="POST" class="needs-validation" novalidate>
+        <div class="row">
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label for="username" class="form-label">Correo Electronico:</label>
                     <input type="email" name="username" class="form-control" id="username"
                            placeholder="Ingrese email" value="figueroa@gmail.com" required>
+                    <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -30,11 +31,14 @@
                     <label for="password" class="form-label">Contraseña:</label>
                     <input type="password" name="password" class="form-control" id="password"
                            placeholder="Ingrese Contraseña" value="12345" required>
+                    <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="feather icon-log-in pr-3"></i>Ingresar
+                </button>
             </div>
             <div class="col-12 text-center pt-3">
                 <a href="/public/cliente">Crear una cuenta</a>

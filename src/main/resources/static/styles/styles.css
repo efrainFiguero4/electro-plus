@@ -79,9 +79,11 @@ body.electroplus {
     color: var(--electroplus-one);
     font-size: 14px;
     font-weight: 600;
+    margin-bottom: 0 !important;
 }
 
 .form-control {
+    font-size: 14px;
     border-color: var(--electroplus-one-cero) !important;
 }
 
@@ -95,4 +97,47 @@ div.row.no-gutters.items > div.col-6.col-sm-4.col-md-3.item {
 
 .bg-cabecera {
     background-color: #E4F7FB !important;
+}
+
+
+::-webkit-input-placeholder {
+    font-size: 0.875rem;
+}
+
+::-moz-placeholder {
+    font-size: 0.875rem;
+}
+
+:-moz-placeholder {
+    font-size: 0.875rem;
+}
+
+:-ms-input-placeholder {
+    font-size: 0.875rem;
+}
+
+.invalid-feedback {
+    padding-left: 0.2rem !important;
+}
+
+.form-group {
+    margin-bottom: .5rem !important;
+}
+
+.item .card {
+    box-shadow: 0 0 1px 0 rgb(51 60 109) !important;
+}
+
+.was-validated .form-control:valid:focus, .form-control.is-valid:focus {
+    box-shadow: none !important;
+}
+
+.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
+    border-color: #dc3545 !important;
+    box-shadow: none !important;
+}
+
+.table th, .table td {
+    padding: 0.5rem !important;
+    vertical-align: center !important;
 }

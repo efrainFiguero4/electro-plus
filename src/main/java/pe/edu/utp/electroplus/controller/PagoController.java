@@ -40,7 +40,7 @@ public class PagoController {
             return "pago/pago";
         }
         BigDecimal montoTotal = listItems.stream().
-                map(n -> n.getProducto().getPrecio().multiply(new BigDecimal(n.getCantidad()))).
+                map(n -> n.getPrecio().multiply(new BigDecimal(n.getCantidad()))).
                 reduce(BigDecimal.ZERO, BigDecimal::add);
         Pago pago = new Pago();
         pago.setFechaPago(new Date());

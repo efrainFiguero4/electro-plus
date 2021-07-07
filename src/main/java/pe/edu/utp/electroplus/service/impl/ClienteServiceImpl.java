@@ -10,6 +10,7 @@ import pe.edu.utp.electroplus.repository.RoleRepository;
 import pe.edu.utp.electroplus.service.ClienteService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -21,13 +22,16 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<Usuario> listarTodos() {
-        return clienteRepository.findAll();
+        List<Usuario> users = clienteRepository.findAll();
+        users.forEach(u -> u.setCodigoRole(u.getRole().getCodigo()));
+        return users;
     }
 
     @Override
     public void guardar(Usuario usuario) {
         usuario.setPasswordencode(cryptPasswordEncoder.encode(usuario.getPassword()));
-        usuario.setRole(roleRepository.findByCodigo(usuario.getCodigoRole()));
+        String[] cr = usuario.getCodigoRole().split(",");
+        usuario.setRole(roleRepository.findByCodigo(cr[cr.length - 1]));
         clienteRepository.save(usuario);
     }
 
@@ -48,6 +52,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Usuario findByUsername(String username) {
-        return clienteRepository.findByUsername(username);
+        Usuario user = clienteRepository.findByUsername(username);
+        if (Objects.nonNull(user)) user.setCodigoRole(user.getRole().getCodigo());
+        return user;
     }
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -23,13 +24,19 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String nombre;
+
+    @NotBlank
     private String apellidos;
 
     @Column(unique = true)
     private String username;
 
+    @NotBlank
     private String password;
+
+    @NotBlank
     private String passwordencode;
 
     @ManyToOne

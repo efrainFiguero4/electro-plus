@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="py-4">
-        <form th:action="@{/micuenta}" th:object="${usuario}" method="POST">
+        <form th:action="@{/micuenta}" th:object="${usuario}" method="POST" class="needs-validation" novalidate>
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
@@ -32,28 +32,32 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="nombres" class="form-label">Nombres</label>
-                        <input type="text" th:field="*{nombre}" class="form-control" id="nombres">
+                        <input type="text" th:field="*{nombre}" class="form-control" id="nombres" required>
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="apellidos" class="form-label">Apellidos</label>
-                        <input type="text" th:field="*{apellidos}" class="form-control" id="apellidos">
+                        <input type="text" th:field="*{apellidos}" class="form-control" id="apellidos" required>
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                     </div>
                 </div>
 
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" th:field="*{password}" class="form-control" id="password">
+                        <input type="password" th:field="*{password}" class="form-control" id="password" required>
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                     </div>
                 </div>
 
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="confirmarpassword" class="form-label">Confirmar Contraseña</label>
-                        <input type="password" th:field="*{confirmarpassword}" class="form-control" id="confirmarpassword"
-                               placeholder="">
+                        <input type="password" th:field="*{confirmarpassword}" class="form-control"
+                               id="confirmarpassword" required>
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                     </div>
                 </div>
 

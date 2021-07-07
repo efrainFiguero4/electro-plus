@@ -18,6 +18,7 @@ import pe.edu.utp.electroplus.service.LoginService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static pe.edu.utp.electroplus.utils.Constants.MENSAJE;
 
@@ -42,7 +43,7 @@ public class PublicController {
 
         model.addAttribute("titulo", "REGISTRARME");
         model.addAttribute("cliente", new Usuario());
-        model.addAttribute("roles", listadoRoles);
+        model.addAttribute("roles", listadoRoles.stream().filter(r -> !r.getCodigo().equals("ADMINISTRADOR")).collect(Collectors.toList()));
         return "public/registrarme";
     }
 

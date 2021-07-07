@@ -1,12 +1,15 @@
 package pe.edu.utp.electroplus.controller;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import pe.edu.utp.electroplus.repository.CarritoRepository;
 import pe.edu.utp.electroplus.repository.ProductoRepository;
 import pe.edu.utp.electroplus.service.ClienteService;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static pe.edu.utp.electroplus.utils.Constants.MENSAJE;
 
 @Log4j2
@@ -36,12 +40,7 @@ public class CarritoController {
     public String carrito(Model model, Principal principal) {
         Usuario user = clienteService.findByUsername(principal.getName());
         List<Carrito> carritos = carritoRepository.findByIdUsuarioAndStatus(user.getId(), Carrito.ESTADO.PENDIENTE.name());
-        List<Producto> productos = carritos.stream().map(c -> {
-            c.getProducto().setPrecioDescuento(c.getProducto().getPrecio().multiply(new BigDecimal(c.getCantidad())));
-            return c.getProducto();
-        }).collect(Collectors.toList());
-        BigDecimal sumPrecio = productos.stream().map(Producto::getPrecio).reduce(BigDecimal.ZERO, BigDecimal::add);
-
+        BigDecimal sumPrecio = carritos.stream().map(Carrito::getPrecio).reduce(BigDecimal.ZERO, BigDecimal::add);
         model.addAttribute("carritos", carritos);
         model.addAttribute("total", sumPrecio);
 
@@ -67,18 +66,18 @@ public class CarritoController {
     public String carritoEliminar(@PathVariable Long idcarrito, RedirectAttributes redirect) {
         carritoRepository.deleteById(idcarrito);
         redirect.addFlashAttribute(MENSAJE, "EL producto se ha quitado del carrito de compras.");
-
         return "redirect:/carrito";
     }
 
-    @GetMapping("/carrito/update/{idcarrito}/{cantidad}")
+    @GetMapping(value = "/carrito/update/{idcarrito}/{cantidad}")
     public ResponseEntity<String> actualizarCantidad(@PathVariable Long idcarrito, @PathVariable Integer cantidad) {
-        log.info("carrito: {} ,cantidad: {} ",idcarrito, cantidad);
-        if(cantidad>0) {
-            Carrito prof = carritoRepository.getOne(idcarrito);
-            prof.setCantidad(cantidad);
-            carritoRepository.save(prof);
+        log.info("carrito: {} ,cantidad: {} ", idcarrito, cantidad);
+        if (cantidad > 0) {
+            Carrito car = carritoRepository.getOne(idcarrito);
+            car.setCantidad(cantidad);
+            car.setPrecio(car.getProducto().getPrecio().multiply(new BigDecimal(cantidad)));
+            carritoRepository.save(car);
         }
-        return  ResponseEntity.ok("OK");
+        return ResponseEntity.ok("OK");
     }
 }

@@ -73,26 +73,41 @@ const closeAlert = () => {
 
 const change = (id) => {
     var cantidad = Number($("#" + id).val());
-    rest(id, cantidad);
+    cantidad > 0 ? rest(id, cantidad) : null;
 }
 
 const aumentar = (id) => {
     var cantidad = Number($("#" + id).val()) + 1;
-    rest(id, cantidad);
+    cantidad > 0 ? rest(id, cantidad) : null;
 }
 
 const disminuir = (id) => {
     var cantidad = Number($("#" + id).val()) - 1;
-    rest(id, cantidad);
+    cantidad > 0 ? rest(id, cantidad) : null;
 }
 
 const rest = (id, cantidad) => {
     $.ajax({
         url: "carrito/update/" + id + "/" + cantidad
     }).done((resp) => {
-        console.log(resp)
-        $("#" + id).val(cantidad)
+        if (resp === "OK") location.reload();
     }).fail((jq, text, err) => {
         console.log(text + ' - ' + err);
     });
 }
+
+(function () {
+    'use strict';
+    window.addEventListener('load', function () {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();

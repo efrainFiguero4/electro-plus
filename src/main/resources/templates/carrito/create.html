@@ -13,7 +13,7 @@
         <!--        no-gutters-->
         <div class="row no-gutters items">
             <div class="col-6 col-sm-4 col-md-3 px-2 item" th:each="carrito : ${carritos}">
-                <div class="card border-0">
+                <div class="card border-0" style="min-height: 100% !important;">
                     <div class="d-flex justify-content-center">
                         <div class="card-imagen">
                             <img th:src="${carrito.producto.imagen}" class="card-img-top">
@@ -22,25 +22,25 @@
                     <div class="card-body p-0">
                         <h5 class="card-title item-titulo text-uppercase text-truncate"
                             th:text="${carrito.producto.nombre}"></h5>
-                        <p class="card-text item-descripcion text-truncate-2"
+                        <p class="card-text item-descripcion text-truncate-2 pb-1"
                            th:text="${carrito.producto.descripcion}"></p>
-                        <p class="item-descuento" th:text="'S/. ' + ${carrito.producto.precioDescuento}"></p>
-                        <p class="item-precio" th:text="'S/. ' + ${carrito.producto.precio}"></p>
-                        <div class="pb-3">
+                        <p class="item-descuento border-top pt-1" style="text-decoration: none" th:text="'PRECIO: S/. ' + ${carrito.producto.precio}"></p>
+                        <p class="item-precio pb-1 mb-0" th:text="'TOTAL : S/. ' + ${carrito.precio}"></p>
+                        <div class="py-1 border-top">
                             <form th:object="${carrito}">
-                                <div class="d-inline-flex">
+                                <div class="d-inline-flex align-items-center">
                                     <input type="text" onkeypress="return numberDecimal(event, 10, 0, false)"
                                            th:onchange="|change('${carrito.id}')|"
                                            th:id="${carrito.id}" th:value="${carrito.cantidad}"
                                            class="form-control text-center"/>
                                     <input type="hidden" name="id" th:value="${carrito.id}"/>
-                                    <button class="btn p-1" type="button"
+                                    <button class="btn p-1 m-1 border-primary" type="button"
                                             th:onclick="|aumentar('${carrito.id}')|">
-                                        <i class="feather pr-2 icon-plus-circle icon-sm"></i>
+                                        <i class="feather icon-plus-circle icon-sm"></i>
                                     </button>
-                                    <button class="btn p-1" type="button"
+                                    <button class="btn p-1 m-1 border-primary" type="button"
                                             th:onclick="|disminuir('${carrito.id}')|">
-                                        <i class="feather pr-2 icon-minus-circle icon-sm"></i>
+                                        <i class="feather icon-minus-circle icon-sm"></i>
                                     </button>
                                 </div>
                             </form>
@@ -53,19 +53,19 @@
             </div>
         </div>
         <div class="mt-auto w-100 electroplus__navbar fixed-bottom py-2">
-            <div class="d-flex justify-content-around align-items-center container">
+            <div class="d-flex justify-content-between align-items-center container">
                 <div class="px-3">
-                    <p class="text-one-70 text-white">Total</p>
-                    <small class="electroplus__cabecera_title text-one text-white" th:text="'S/. ' +${total}"></small>
+                    <p class="text-one-70 text-white mb-0">Total</p>
+                    <small class="electroplus__cabecera_title text-one text-white" id="totale" th:text="'S/. ' +${total}"></small>
                 </div>
                 <div>
                     <a href="/inicio" class="btn btn-secondary btn-block" type="submit"
                        style="margin: 8px">
-                        Seguir Agregando
+                        Agregar productos
                     </a>
                     <a th:href="@{/pago}" class="btn btn-success btn-block" type="submit"
                        style="margin: 8px" th:disabled="${carritos.size() == 0}">
-                        Procesar Compra
+                        Finalizar Compra
                     </a>
                 </div>
             </div>

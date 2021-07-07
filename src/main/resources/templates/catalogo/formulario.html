@@ -2,95 +2,101 @@
 <html xmlns:th="https://www.thymeleaf.org"
       th:replace="~{fragment/fragment :: fragment (~{::body},'formulario')}">
 <body>
-    <div class="bg-one" style="height: 7rem"></div>
-    <div class="container" style="margin-top: -80px">
-        <div class="electroplus__cabecera mt-2" style="background-color: #E4F7FB !important;">
-            <div class="d-flex justify-content-around align-items-center">
-                <div class="px-3 text-center">
-                    <label class="electroplus__cabecera_title text-one" th:text="${titulo}"></label>
-                </div>
-                <div>
-                    <img th:src="@{/image/producto.svg}" alt="image_catalogo" style="margin-top: -8px">
-                </div>
+<div class="bg-one" style="height: 7rem"></div>
+<div class="container" style="margin-top: -80px">
+    <div class="electroplus__cabecera mt-2" style="background-color: #E4F7FB !important;">
+        <div class="d-flex justify-content-around align-items-center">
+            <div class="px-3 text-center">
+                <label class="electroplus__cabecera_title text-one" th:text="${titulo}"></label>
+            </div>
+            <div>
+                <img th:src="@{/image/producto.svg}" alt="image_catalogo" style="margin-top: -8px">
             </div>
         </div>
-        <div class="py-4">
-            <form th:object="${producto}" th:action="@{/producto/registrar}" method="POST">
-                <input type="hidden" th:field="${producto.id}"/>
-                <input type="hidden" th:field="${producto.nombreimagen}" id="nombreimagen"/>
-                <input type="hidden" th:field="${producto.imagen}" id="foto">
-                <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" th:field="${producto.nombre}" required class="form-control" id="nombre">
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="precio" class="form-label">Precio</label>
-                            <input type="text" onkeypress="return numberDecimal(event, 10, 2, false)"
-                                   th:field="${producto.precio}" required class="form-control" id="precio">
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="descuento" class="form-label">Precio Descuento</label>
-                            <input type="text" onkeypress="return numberDecimal(event, 10, 2, false)"
-                                   th:field="${producto.descuento}" required class="form-control" id="descuento">
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="foto" class="form-label">Seleccionar imagen</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input"
-                                       accept=".jpg,.jpeg" onchange="getImage(event.target)">
-                                <label class="custom-file-label" id="labelfoto"
-                                       th:text="${producto.nombreimagen}"></label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="foto" class="form-label">Visualizar Imagen</label>
-                            <div class="d-flex justify-content-center">
-                                <div class="card m-0">
-                                    <img th:src="${producto.imagen}" id="preview" class="card-img-top"
-                                         style="width:14rem !important;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="descripcion" class="form-label">Descripción</label>
-                            <textarea class="form-control" th:field="${producto.descripcion}" required id="descripcion"
-                                      rows="4">
-                                </textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="categoria" class="form-label">Categoría</label>
-                            <select class="form-control" th:field="${producto.categoria}" required id="categoria">
-                                <option th:each="categoria : ${categorias}" th:value="${categoria.id}">
-                                    <span th:text="${categoria.descripcion}"></span>
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-block" th:text="${titulo}"></button>
+    </div>
+    <div class="py-4">
+        <form th:object="${producto}" th:action="@{/producto/registrar}" method="POST" class="needs-validation"
+              novalidate>
+            <input type="hidden" th:field="${producto.id}"/>
+            <input type="hidden" th:field="${producto.nombreimagen}" id="nombreimagen"/>
+            <input type="hidden" th:field="${producto.imagen}" id="foto">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" th:field="${producto.nombre}" required class="form-control" id="nombre">
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                     </div>
                 </div>
-            </form>
-        </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="text" onkeypress="return numberDecimal(event, 10, 2, false)"
+                               th:field="${producto.precio}" required class="form-control" id="precio">
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="descuento" class="form-label">Precio Descuento</label>
+                        <input type="text" onkeypress="return numberDecimal(event, 10, 2, false)"
+                               th:field="${producto.descuento}" required class="form-control" id="descuento">
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="foto" class="form-label">Seleccionar imagen</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input"
+                                   accept=".jpg,.jpeg" onchange="getImage(event.target)">
+                            <label class="custom-file-label" id="labelfoto"
+                                   th:text="${producto.nombreimagen}"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="foto" class="form-label">Visualizar Imagen</label>
+                        <div class="d-flex justify-content-center">
+                            <div class="card m-0">
+                                <img th:src="${producto.imagen}" id="preview" class="card-img-top"
+                                     style="width:14rem !important;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control" th:field="${producto.descripcion}" required id="descripcion"
+                                  rows="4">
+                                </textarea>
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria" class="form-label">Categoría</label>
+                        <select class="form-control" th:field="${producto.categoria}" required id="categoria">
+                            <option th:each="categoria : ${categorias}" th:value="${categoria.id}">
+                                <span th:text="${categoria.descripcion}"></span>
+                            </option>
+                        </select>
+                        <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block" th:text="${titulo}"></button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 </body>
 </html>

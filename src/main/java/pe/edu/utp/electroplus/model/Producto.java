@@ -22,6 +22,7 @@ public class Producto {
     private Long id;
 
     @NotNull
+    @Column(columnDefinition = "TEXT")
     private String nombre;
 
     @NotNull
@@ -41,6 +42,7 @@ public class Producto {
     private Integer categoria;
 
     @NotNull
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
     @Transient
