@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Table(name = "t_carrito")
 public class Carrito {
+    public enum ESTADO {PENDIENTE, PAGADO}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,4 +33,8 @@ public class Carrito {
     @NotNull
     private Integer cantidad;
 
+    private BigDecimal precio;
+
+    @Builder.Default
+    private String status = ESTADO.PENDIENTE.name();
 }

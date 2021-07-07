@@ -10,9 +10,9 @@
             >CARRITO DE COMPRAS</label>
 
         </div>
-<!--        no-gutters-->
-        <div class="row">
-            <div class="col-6 col-sm-4 col-md-3 px-2" th:each="carrito : ${carritos}">
+        <!--        no-gutters-->
+        <div class="row no-gutters items">
+            <div class="col-6 col-sm-4 col-md-3 px-2 item" th:each="carrito : ${carritos}">
                 <div class="card border-0">
                     <div class="d-flex justify-content-center">
                         <div class="card-imagen">
@@ -22,26 +22,51 @@
                     <div class="card-body p-0">
                         <h5 class="card-title item-titulo text-uppercase text-truncate"
                             th:text="${carrito.producto.nombre}"></h5>
-                        <p class="card-text item-descripcion text-truncate-2" th:text="${carrito.producto.descripcion}"></p>
+                        <p class="card-text item-descripcion text-truncate-2"
+                           th:text="${carrito.producto.descripcion}"></p>
                         <p class="item-descuento" th:text="'S/. ' + ${carrito.producto.precioDescuento}"></p>
                         <p class="item-precio" th:text="'S/. ' + ${carrito.producto.precio}"></p>
-                        <a th:href="@{/carrito/eliminar/}+${carrito.id}" class="btn btn-block btn-primary">
-                            Eliminar producto
+                        <div class="pb-3">
+                            <form th:object="${carrito}">
+                                <div class="d-inline-flex">
+                                    <input type="text" onkeypress="return numberDecimal(event, 10, 0, false)"
+                                           th:onchange="|change('${carrito.id}')|"
+                                           th:id="${carrito.id}" th:value="${carrito.cantidad}"
+                                           class="form-control text-center"/>
+                                    <input type="hidden" name="id" th:value="${carrito.id}"/>
+                                    <button class="btn p-1" type="button"
+                                            th:onclick="|aumentar('${carrito.id}')|">
+                                        <i class="feather pr-2 icon-plus-circle icon-sm"></i>
+                                    </button>
+                                    <button class="btn p-1" type="button"
+                                            th:onclick="|disminuir('${carrito.id}')|">
+                                        <i class="feather pr-2 icon-minus-circle icon-sm"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <a th:href="@{/carrito/eliminar/}+${carrito.id}" class="btn btn-block btn-danger">
+                            Eliminar <i class="feather icon-trash-2"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="mt-auto w-100 electroplus__navbar fixed-bottom py-2">
-            <div class="d-flex justify-content-around align-items-center">
+            <div class="d-flex justify-content-around align-items-center container">
                 <div class="px-3">
                     <p class="text-one-70 text-white">Total</p>
                     <small class="electroplus__cabecera_title text-one text-white" th:text="'S/. ' +${total}"></small>
                 </div>
                 <div>
-                    <button class="btn btn-primary btn-block" type="submit" style="margin-top: -8px">
+                    <a href="/inicio" class="btn btn-secondary btn-block" type="submit"
+                       style="margin: 8px">
+                        Seguir Agregando
+                    </a>
+                    <a th:href="@{/pago}" class="btn btn-success btn-block" type="submit"
+                       style="margin: 8px" th:disabled="${carritos.size() == 0}">
                         Procesar Compra
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

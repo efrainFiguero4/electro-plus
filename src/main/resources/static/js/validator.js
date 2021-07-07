@@ -66,3 +66,33 @@ function getImage(event) {
     document.getElementById("nombreimagen").value = file.name;
     document.getElementById("labelfoto").innerHTML = 'C:\\fakepath\\' + file.name;
 }
+
+const closeAlert = () => {
+    $('.alert').alert('close')
+}
+
+const change = (id) => {
+    var cantidad = Number($("#" + id).val());
+    rest(id, cantidad);
+}
+
+const aumentar = (id) => {
+    var cantidad = Number($("#" + id).val()) + 1;
+    rest(id, cantidad);
+}
+
+const disminuir = (id) => {
+    var cantidad = Number($("#" + id).val()) - 1;
+    rest(id, cantidad);
+}
+
+const rest = (id, cantidad) => {
+    $.ajax({
+        url: "carrito/update/" + id + "/" + cantidad
+    }).done((resp) => {
+        console.log(resp)
+        $("#" + id).val(cantidad)
+    }).fail((jq, text, err) => {
+        console.log(text + ' - ' + err);
+    });
+}

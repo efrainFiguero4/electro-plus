@@ -12,8 +12,13 @@ public class LoginController {
 
     private final LoginService loginService;
 
+    @GetMapping("")
+    public String inicio() {
+        return "redirect:/inicio";
+    }
+
     @GetMapping("/login")
-    public String Log(Model model, String error, String logout) {
+    public String iniciarSesion(Model model, String error, String logout) {
         if (loginService.isAuthenticated()) {
             return "redirect:/";
         }

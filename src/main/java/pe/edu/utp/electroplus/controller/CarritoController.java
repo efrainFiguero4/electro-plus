@@ -1,5 +1,7 @@
 package pe.edu.utp.electroplus.controller;
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
@@ -22,6 +24,7 @@ import pe.edu.utp.electroplus.service.ClienteService;
 
 import static pe.edu.utp.electroplus.utils.Constants.MENSAJE;
 
+@Log4j2
 @Controller
 @AllArgsConstructor
 public class CarritoController {
@@ -32,10 +35,10 @@ public class CarritoController {
     @GetMapping("/carrito")
     public String carrito(Model model, Principal principal) {
         Usuario user = clienteService.findByUsername(principal.getName());
-        List<Carrito> carritos = carritoRepository.findByIdUsuario(user.getId());
-        List<Producto> productos = carritos.stream().map(p -> {
-            p.getProducto().setPrecioDescuento(p.getProducto().getPrecio().multiply(new BigDecimal(p.getCantidad())));
-            return p.getProducto();
+        List<Carrito> carritos = carritoRepository.findByIdUsuarioAndStatus(user.getId(), Carrito.ESTADO.PENDIENTE.name());
+        List<Producto> productos = carritos.stream().map(c -> {
+            c.getProducto().setPrecioDescuento(c.getProducto().getPrecio().multiply(new BigDecimal(c.getCantidad())));
+            return c.getProducto();
         }).collect(Collectors.toList());
         BigDecimal sumPrecio = productos.stream().map(Producto::getPrecio).reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -51,6 +54,7 @@ public class CarritoController {
         Producto producto = productoRepository.getOne(idProducto);
         carritoRepository.saveAndFlush(Carrito.builder()
                 .cantidad(1)
+                .precio(producto.getPrecio().multiply(new BigDecimal(1)))
                 .producto(producto)
                 .idUsuario(user.getId())
                 .build());
@@ -60,10 +64,21 @@ public class CarritoController {
     }
 
     @GetMapping("/carrito/eliminar/{idcarrito}")
-    public String carritoEliminar(@PathVariable Long idcarrito, Principal principal, RedirectAttributes redirect) {
+    public String carritoEliminar(@PathVariable Long idcarrito, RedirectAttributes redirect) {
         carritoRepository.deleteById(idcarrito);
         redirect.addFlashAttribute(MENSAJE, "EL producto se ha quitado del carrito de compras.");
 
         return "redirect:/carrito";
+    }
+
+    @GetMapping("/carrito/update/{idcarrito}/{cantidad}")
+    public ResponseEntity<String> actualizarCantidad(@PathVariable Long idcarrito, @PathVariable Integer cantidad) {
+        log.info("carrito: {} ,cantidad: {} ",idcarrito, cantidad);
+        if(cantidad>0) {
+            Carrito prof = carritoRepository.getOne(idcarrito);
+            prof.setCantidad(cantidad);
+            carritoRepository.save(prof);
+        }
+        return  ResponseEntity.ok("OK");
     }
 }

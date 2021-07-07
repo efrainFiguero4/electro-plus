@@ -6,7 +6,9 @@
 <div class="bg-one" style="height: 7rem"></div>
 <div class="container" style="margin-top: -80px">
     <div class="py-4">
-        <form action="" method="post">
+        <form th:object="${pago}" th:action="@{/pago/create}" method="post">
+            <input type="hidden" th:field="*{idUsuario}"/>
+            <input type="hidden" th:field="*{montoTotal}"/>
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
@@ -17,22 +19,38 @@
 
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label for="pago" class="form-label">Método de pago</label>
-                        <input type="text" class="form-control" id="pago">
+                        <label for="nombreTarjeta" class="form-label">Nombre Tarjeta</label>
+                        <input type="text" th:field="*{nombreTarjeta}" class="form-control" id="nombreTarjeta">
                     </div>
                 </div>
 
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="numeroTarjeta" class="form-label">CVV</label>
+                        <input type="text" th:field="*{numeroTarjeta}" data-inputmask="'mask': '9999-9999-9999-9999'"
+                               class="form-control" id="numeroTarjeta">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="dueDateYYMM" class="form-label">Vencimiento</label>
+                        <input type="text" th:field="*{dueDateYYMM}"
+                               data-inputmask="'mask': '99/99', 'placeholder': 'yy/mm'"
+                               class="form-control" id="dueDateYYMM">
+                    </div>
+                </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="cvv" class="form-label">CVV</label>
-                        <input type="text" class="form-control" id="cvv">
+                        <input type="text" th:field="*{cvv}" data-inputmask="'mask': '999', 'placeholder': '999'"
+                               class="form-control" id="cvv">
                     </div>
                 </div>
 
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label for="" class="form-label">Documento de Identidad</label><br/>
-                        <select id="cuotas" placeholder="cuotas" autocomplete="off" class="form-control">
+                        <label for="documento" class="form-label">Documento de Identidad</label><br/>
+                        <select id="documento" th:field="*{tipoDocumento}" autocomplete="off" class="form-control">
                             <option value="-">Seleccion documento</option>
                             <option value="1">DNI</option>
                             <option value="2">Carnet de extranjeria</option>
@@ -43,20 +61,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="numero" class="form-label">Numero de documento</label>
-                        <input type="text" class="form-control" id="numero">
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6">
-                    <div class="form-group">
-                        <label for="cuotas" class="form-label">Cuotas</label><br/>
-                        <select id="cuotas" placeholder="cuotas" autocomplete="off" class="form-control">
-                            <option value="-">Numero de cuotas</option>
-                            <option value="1">1 Cuota</option>
-                            <option value="2">2 Cuotas</option>
-                            <option value="3">3 Cuotas</option>
-                            <option value="4">4 Cuotas</option>
-                        </select>
+                        <input type="text" th:field="*{nroDocumento}" class="form-control numeric" id="numero">
                     </div>
                 </div>
 
@@ -64,11 +69,12 @@
                     <div class="d-flex justify-content-around align-items-center">
                         <div class="px-3">
                             <p class="text-one-70" style="color:#FFFFFF">Total</p>
-                            <small class="electroplus__cabecera_title text-one " style="color:#FFFFFF">S/4000.00</small>
+                            <small th:text="'s/. '+ *{montoTotal}" class="electroplus__cabecera_title text-one "
+                                   style="color:#FFFFFF"></small>
                         </div>
                         <div>
-                            <button class="btn btn-primary btn-block" type="submit" style="margin-top: -8px"
-                            >Finalizar Compra
+                            <button class="btn btn-primary btn-block" type="submit" style="margin-top: -8px">Finalizar
+                                Compra
                             </button>
                         </div>
                     </div>
@@ -77,5 +83,11 @@
         </form>
     </div>
 </div>
+
+<script th:src="@{/webjars/jquery.inputmask/jquery.inputmask.min.js}"></script>
+<script>
+    $(":input").inputmask();
+    $(".numeric").numeric({ decimal : false,  negative : false });
+</script>
 </body>
 </html>

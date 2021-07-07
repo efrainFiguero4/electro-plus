@@ -18,7 +18,7 @@ spring:
       maximum-pool-size: 3
       schema: electroplus
     initialization-mode: always
-    data: classpath:data/categoria.sql,classpath:data/rol.sql,classpath:data/producto.sql
+    data: classpath:data/categoria.sql,classpath:data/rol.sql #,classpath:data/producto.sql
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
@@ -27,7 +27,7 @@ spring:
       hibernate:
         naming:
           implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true

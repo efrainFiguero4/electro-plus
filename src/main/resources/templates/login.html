@@ -17,19 +17,19 @@
     </div>
 
     <form th:action="@{/login}" method="POST">
-        <div class="row">
+        <div class="row needs-validation">
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label for="username" class="form-label">Correo Electronico:</label>
                     <input type="email" name="username" class="form-control" id="username"
-                           placeholder="Ingrese email" value="figueroa@gmail.com">
+                           placeholder="Ingrese email" value="figueroa@gmail.com" required>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label for="password" class="form-label">Contraseña:</label>
                     <input type="password" name="password" class="form-control" id="password"
-                           placeholder="Ingrese Contraseña" value="12345">
+                           placeholder="Ingrese Contraseña" value="12345" required>
                 </div>
             </div>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -41,6 +41,5 @@
             </div>
         </div>
     </form>
-</div>
 </body>
 </html>

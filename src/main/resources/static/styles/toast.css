@@ -53,4 +53,11 @@
     background: #e0f2f6 !important;
     border-left: 9px solid #0594b9;
 }
- 
+
+.alert {
+    padding: 0 !important;
+}
+.alert-dismissible .close {
+    position: relative !important;
+    padding: 0.2rem !important;
+}
