@@ -52,7 +52,7 @@
     font-weight: 900;
 }
 
-.card {
+.item .card {
     transition: all .3s;
     padding: .5rem;
     border-radius: 8px !important;

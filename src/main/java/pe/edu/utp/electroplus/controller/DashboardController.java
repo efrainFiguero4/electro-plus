@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pe.edu.utp.electroplus.model.Carrito;
 import pe.edu.utp.electroplus.model.Pedido;
+import pe.edu.utp.electroplus.model.Usuario;
+import pe.edu.utp.electroplus.repository.CarritoRepository;
 import pe.edu.utp.electroplus.repository.PedidoRepository;
+import pe.edu.utp.electroplus.repository.ProductoRepository;
+import pe.edu.utp.electroplus.service.ClienteService;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.Principal;
+import java.util.*;
 
 import static java.util.stream.Collectors.*;
 
@@ -24,6 +26,8 @@ import static java.util.stream.Collectors.*;
 public class DashboardController {
 
     private final PedidoRepository pedidoRepository;
+    private final CarritoRepository carritoRepository;
+    private final ClienteService clienteService;
 
     @GetMapping(value = "/pedidostotales", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Map<String, Object>>> productos() {
@@ -43,4 +47,12 @@ public class DashboardController {
         }).collect(toList());
         return ResponseEntity.ok(groups);
     }
+
+    @GetMapping(value = "/bolsa", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Integer>> getCarrito(Principal principal) {
+        Usuario user = clienteService.findByUsername(principal.getName());
+        List<Carrito> carritos = carritoRepository.findByIdUsuarioAndStatus(user.getId(), Carrito.ESTADO.PENDIENTE.name());
+        return ResponseEntity.ok(Collections.singletonMap("total", carritos.size()));
+    }
+
 }

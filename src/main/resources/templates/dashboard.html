@@ -3,8 +3,36 @@
       th:replace="~{fragment/fragment :: fragment (~{::body},'dashboard')}">
 
 <body>
-<div class="container w-100 h-100"> DASHBOARD
-    <div id="chart_div"></div>
+<div class="container w-100 h-100">
+    <div class="row">
+        <div class="col-12 py-4">
+            <div class="electroplus__cabecera p-2" style="background-color: #E5E7ED">
+                <div class="d-inline-flex align-items-center justify-content-between w-100 flex-wrap">
+                    <div class="text-one electroplus__cabecera_title">DASHBOARD</div>
+                    <div class="d-inline-flex align-items-center">
+                        <!--form th:object="${filtro}" th:action="@{/pedidos}"
+                              class="d-inline-flex align-items-center pr-2">
+                            <small class="text-one">Filtrar por: </small>
+                            <input type="date" class="form-control form-control-sm mx-3"
+                                   th:field="${filtro.fecha}" name="fecha"
+                                   style="width: 160px">
+                            <button type="submit" class="btn btn-success btn-sm d-inline-flex align-items-center">
+                                <i class="feather icon-search icon-xs"></i>
+                                <span class="d-none d-sm-block">Filtrar</span>
+                            </button>
+                        </form>
+                        <a th:href="@{/pedidos}" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
+                            <i class="feather icon-x-circle icon-xs"></i>
+                            <span class="d-none d-sm-block">Limpiar</span>
+                        </a-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 py-4">
+            <div id="chart_div"></div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

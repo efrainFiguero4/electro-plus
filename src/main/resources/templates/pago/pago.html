@@ -8,13 +8,13 @@
 <div class="container">
     <div class="py-4">
         <form th:object="${pago}" th:action="@{/pago/create}" method="post" class="needs-validation" novalidate>
-            <input type="hidden" th:field="*{idUsuario}"/>
+            <input type="hidden" th:field="*{usuario}"/>
             <input type="hidden" th:field="*{montoTotal}"/>
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="envio" class="form-label">Direccion de envío</label>
-                        <input type="text" class="form-control" id="envio" required>
+                        <input type="text" th:field="*{direccion}" class="form-control" id="envio" required>
                         <div class="invalid-feedback mt-0">Este campo es obligatorio</div>
                     </div>
                 </div>

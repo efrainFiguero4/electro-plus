@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -23,8 +23,10 @@ public class Pago {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fechaPago;
+
+    private String direccion;
 
     private String nombreTarjeta;
 
@@ -38,11 +40,26 @@ public class Pago {
 
     private BigDecimal montoTotal;
 
-    @NotNull
-    private Long idUsuario;
+    @ManyToOne
+    private Usuario usuario;
 
-    private Long idPedido;
+    @ManyToOne
+    private Pedido pedido;
 
     private String tipoDocumento;
     private String nroDocumento;
+
+    @Builder.Default
+    private String status = Carrito.ESTADO.FACTURADO.name();
+
+    public String getFormatDate() {
+        String pattern = "dd-MM-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(this.fechaPago);
+    }
+
+    public String finaliza() {
+        String[] strings = this.numeroTarjeta.split("-");
+        return strings[strings.length - 1];
+    }
 }

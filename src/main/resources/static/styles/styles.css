@@ -124,6 +124,10 @@ div.row.no-gutters.items > div.col-6.col-sm-4.col-md-3.item {
     margin-bottom: .5rem !important;
 }
 
+.item {
+    padding: 0.5rem !important;
+}
+
 .item .card {
     box-shadow: 0 0 1px 0 rgb(51 60 109) !important;
 }
@@ -140,4 +144,77 @@ div.row.no-gutters.items > div.col-6.col-sm-4.col-md-3.item {
 .table th, .table td {
     padding: 0.5rem !important;
     vertical-align: center !important;
+}
+
+/**
+* Estilos de Mis pedidos
+*/
+.detalle .titulo {
+    font-size: 18px;
+    color: #2F353D;
+    line-height: 26px;
+}
+
+.detalle .descripcion {
+    font-size: 13px !important;
+    color: #83838F;
+    line-height: 23px;
+}
+
+.box {
+    box-sizing: border-box !important;
+}
+
+.box.total {
+    margin-right: 0;
+    float: right;
+    border: 1px solid #BCBCCC;
+    padding: 10px 18px 18px 18px;
+}
+
+.box.total .title {
+    text-align: center;
+    margin-top: 0;
+    font-size: 18px;
+    color: #2F353D;
+    line-height: 26px;
+}
+
+.box.total .item {
+    float: left;
+    clear: both;
+    width: 100%;
+    font-weight: 300;
+    color: #83838F;
+    font-size: 15px;
+}
+
+.box.total .item span {
+    font-weight: 700;
+    float: right;
+}
+
+.box.total .item.strong {
+    border-top: 1px solid #E3E4E6;
+    font-weight: 700;
+    font-size: 15px;
+    color: #2F353D;
+}
+
+.box.total .item.strong span {
+    font-size: 18px;
+}
+
+.no-focus {
+    box-shadow: none !important;
+}
+
+.dropdown-item:hover, .dropdown-item:focus, .dropdown-item:active {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #333c6d;
+}
+
+.dropdown-item {
+    color: #333c6d;
 }

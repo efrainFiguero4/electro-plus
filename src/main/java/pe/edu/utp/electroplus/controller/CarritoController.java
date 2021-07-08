@@ -3,14 +3,15 @@ package pe.edu.utp.electroplus.controller;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,6 @@ import pe.edu.utp.electroplus.repository.CarritoRepository;
 import pe.edu.utp.electroplus.repository.ProductoRepository;
 import pe.edu.utp.electroplus.service.ClienteService;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static pe.edu.utp.electroplus.utils.Constants.MENSAJE;
 
 @Log4j2

@@ -4,32 +4,120 @@
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-lg-10 mt-5 mb-5">
-            <h2>Pedido</h2><br/>
-            <table id="example" class="table table-bordered table-responsive" style="width: 100%">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Id</th>
-                    <th>Fecha</th>
-                    <th>Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="pedido : ${pedidos}">
-                    <td>
-                        <a th:href="@{'/pedido/view/__${pedido.id}__'}"
-                           class="btn btn-info" role="button">View</a>
-                    </td>
-                    <td th:text="${pedido.id}"></td>
-                    <td th:text="${pedido.fechaPedido}"></td>
-                    <td th:text="${pedido.montoTotal}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <p th:text="${mensaje}"/>
+        <div class="col-12 py-4">
+            <div class="electroplus__cabecera p-2" style="background-color: #E5E7ED">
+                <div class="d-inline-flex align-items-center justify-content-between w-100 flex-wrap">
+                    <div class="text-one electroplus__cabecera_title">Mis Pedidos</div>
+                    <div class="d-inline-flex align-items-center">
+                        <form th:object="${filtro}" th:action="@{/pedidos}" class="d-inline-flex align-items-center pr-2">
+                            <small class="text-one">Filtrar por: </small>
+                            <input type="date" class="form-control form-control-sm mx-3"
+                                   th:field="${filtro.fecha}" name="fecha"
+                                   style="width: 160px">
+                            <button type="submit" class="btn btn-success btn-sm d-inline-flex align-items-center">
+                                <i class="feather icon-search icon-xs"></i>
+                                <span class="d-none d-sm-block">Filtrar</span>
+                            </button>
+                        </form>
+                        <a th:href="@{/pedidos}" class="btn btn-outline-danger btn-sm d-inline-flex align-items-center">
+                            <i class="feather icon-x-circle icon-xs"></i>
+                            <span class="d-none d-sm-block">Limpiar</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="accordion" id="accordionExample" th:if="${pagos.size()>0}">
+                <div class="card" th:each="pago,iter : ${pagos}">
+                    <div class="card-header" th:id="'header'+${iter.index}">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left no-focus" type="button"
+                                    style="color: #333c6d; background-color: transparent;"
+                                    th:data-target="'#collapse'+${iter.index}"
+                                    th:aria-controls="'collapse'+${iter.index}" data-toggle="collapse"
+                                    aria-expanded="true"> Compra realizada el
+                                <i class="font-weight-bold" th:text="${pago.getFormatDate()}"></i>
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div th:id="'collapse'+${iter.index}" class="collapse"
+                         th:aria-labelledby="'header'+${iter.index}"
+                         data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="row no-gutters">
+                                <div class="col-12 col-sm-3 detalle py-3">
+                                    <label class="titulo d-block">Forma de Pago</label>
+                                    <small class="descripcion d-block">Tarjeta Visa finalizada en <span th:text="${pago.finaliza()}"></span></small>
+                                    <small class="descripcion d-block"><span th:text="'S/. '+${pago.montoTotal}"></span>(1 cuota)</small>
+                                </div>
+                                <div class="col-12 col-sm-3 detalle py-3">
+                                    <label class="titulo d-block">Dirección de Envío </label>
+                                    <small class="descripcion d-block" th:text="${pago.direccion}"></small>
+                                    <small class="descripcion d-block" th:text="${pago.nombreTarjeta}"></small>
+                                </div>
+                                <div class="col-12 col-sm-3 detalle py-3">
+                                    <label class="titulo d-block">Datos Personales</label>
+                                    <small class="descripcion d-block"
+                                           th:text="${pago.usuario.nombre}+' '+${pago.usuario.apellidos}"></small>
+                                    <small class="descripcion d-block"
+                                           th:text="${pago.tipoDocumento}+': '+${pago.nroDocumento}"></small>
+                                </div>
+                                <div class="col-12 col-sm-3 py-3">
+                                    <div class="box total w-100">
+                                        <div class="title">Total</div>
+                                        <div class="item">SUBTOTAL:<span th:text="'S/. '+${pago.montoTotal}"></span>
+                                        </div>
+                                        <div class="item">IMPUESTOS:<span>S/. 0</span></div>
+                                        <div class="item">ENVÍO:<span th:text="'S/. 0.00'"></span></div>
+                                        <div class="item">DESCUENTO:<span th:text="'S/. 0.00'"></span></div>
+                                        <div class="item strong">TOTAL:<span th:text="'S/. '+${pago.montoTotal}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters items border-top">
+                                <div class="col-12 py-3 mb-3 border-top"
+                                     style="border-bottom: 1px solid #dee2e6 !important;">
+                                    <div style="font-size: 15px; color: #2F353D; font-weight: 700;">Estado del pedido
+                                    </div>
+                                    <div style="color: #22C083;" th:text="${pago.status}"></div>
+                                </div>
+                                <div class="col-12 col-sm-4 col-md-3 px-2 item"
+                                     th:each="carrito : ${pago.pedido.productos}">
+                                    <div class="card border-0" style="min-height: 100% !important;">
+                                        <div class="d-flex justify-content-center">
+                                            <div class="card-imagen">
+                                                <img th:src="${carrito.producto.imagen}" class="card-img-top">
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <h5 class="card-title item-titulo text-uppercase text-truncate"
+                                                th:text="${carrito.producto.nombre}"></h5>
+                                            <p class="card-text item-descripcion text-truncate-2 pb-1"
+                                               th:text="${carrito.producto.descripcion}"></p>
+                                            <p class="item-descuento border-top pt-1" style="text-decoration: none"
+                                               th:text="'PRECIO: S/. ' + ${carrito.producto.precio}"></p>
+                                            <p class="item-descuento" style="text-decoration: none"
+                                               th:text="'CANTIDAD : S/. ' + ${carrito.cantidad}"></p>
+                                            <p class="item-precio pb-1 mb-0"
+                                               th:text="'TOTAL : S/. ' + ${carrito.precio}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center w-100 h-100 bg-white" th:if="${pagos.size()==0}">
+                <img th:src="@{/image/not-found.png}" alt="NOT FOUND" height="411">
+            </div>
         </div>
     </div>
 </div>
+
 </body>
+
 </html>

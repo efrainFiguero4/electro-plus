@@ -14,11 +14,11 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min-jsf.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap-jsf.css}"/>
     <link th:rel="stylesheet" type="text/css" th:href="@{/icons/css/iconfont.css}"/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/styles/catalogo.css}"/>
     <link th:rel="stylesheet" type="text/css" th:href="@{/styles/styles.css}"/>
     <link th:rel="stylesheet" type="text/css" th:href="@{/styles/main.css}"/>
     <link th:rel="stylesheet" type="text/css" th:href="@{/styles/animaciones.css}"/>
-    <link th:rel="stylesheet" type="text/css" th:href="@{/styles/catalogo.css}"/>
-    <link th:rel="stylesheet" th:href="@{/styles/toast.css}"/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/styles/toast.css}"/>
 
     <!--    Headers-->
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -69,10 +69,12 @@
                             Catalogo
                         </a>
                     </li>
-                    <li class="nav-item p-2 d-block d-sm-none" sec:authorize="isAuthenticated()">
-                        <a class="nav-link electroplus__navbar__link" href="/carrito">
+                    <li class="nav-item p-2 d-block d-sm-none w-100" sec:authorize="isAuthenticated()">
+                        <a class="nav-link electroplus__navbar__link d-flex align-items-center" href="/carrito">
                             <i class="feather pr-2 icon-shopping-cart icon-sm"></i>
                             Carrito de compras
+                            <span class="badge badge-warning badge-pill ml-auto"
+                                  style="font-size: 16px" id="carritopp">0</span>
                         </a>
                     </li>
                     <li class="nav-item p-2 d-block d-sm-none" sec:authorize="isAuthenticated()">
@@ -89,7 +91,7 @@
                     </li>
                     <li class="nav-item p-2" sec:authorize="isAuthenticated() && hasAuthority('ADMINISTRADOR')">
                         <a class="nav-link electroplus__navbar__link" href="/clientes/lista">
-                            <i class="feather pr-2 icon-archive icon-sm"></i>
+                            <i class="feather pr-2 icon-users icon-sm"></i>
                             Clientes
                         </a>
                     </li>
@@ -123,24 +125,27 @@
                            role="button">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/micuenta">
+                            <a class="dropdown-item py-2" href="/micuenta">
                                 <i class="feather pr-2 icon-user icon-xs"></i>
                                 Mi Cuenta
                             </a>
-                            <a class="dropdown-item" href="/dashboard">
+                            <a class="dropdown-item py-2" href="/dashboard"
+                               sec:authorize="isAuthenticated() && hasAuthority('ADMINISTRADOR')">
                                 <i class="feather pr-2 icon-pie-chart icon-xs"></i>
                                 Dashboard
                             </a>
-                            <a class="dropdown-item" href="/carrito">
+                            <a class="dropdown-item py-2 d-flex align-items-center" href="/carrito">
                                 <i class="feather pr-2 icon-shopping-cart icon-xs"></i>
                                 Carrito
+                                <span class="badge badge-warning badge-pill ml-auto"
+                                      style="font-size: 16px" id="carritop">0</span>
                             </a>
-                            <a class="dropdown-item" href="/pedidos">
+                            <a class="dropdown-item py-2" href="/pedidos">
                                 <i class="feather pr-2 icon-shopping-bag icon-xs"></i>
                                 Pedidos
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" style="cursor:pointer;"
+                            <a class="dropdown-item py-2" style="cursor:pointer;"
                                onclick="document.forms['logoutForm'].submit()">
                                 <i class="feather pr-2 icon-log-out icon-xs"></i>
                                 Cerrar sesión
@@ -185,6 +190,21 @@
         </div>
     </div>
 </main>
+
+<script>
+    $.ajax({
+        url: "dashboard/bolsa",
+        dataType: "json"
+    }).done((resp) => {
+        console.log("total: " + JSON.stringify(resp));
+        if (resp !== null) {
+            document.getElementById("carritop").innerText = resp.total;
+            document.getElementById("carritopp").innerText = resp.total;
+        }
+    }).fail((jq, text, err) => {
+        console.log(text + ' - ' + err);
+    });
+</script>
 </body>
 
 </html>

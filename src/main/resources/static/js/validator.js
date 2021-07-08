@@ -67,8 +67,9 @@ function getImage(event) {
     document.getElementById("labelfoto").innerHTML = 'C:\\fakepath\\' + file.name;
 }
 
-const closeAlert = () => {
-    $('.alert').alert('close')
+const formatDate = (date) => {
+    console.log(data)
+    return date;
 }
 
 const change = (id) => {
