@@ -51,8 +51,8 @@ public class DashboardController {
     @GetMapping(value = "/bolsa", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Integer>> getCarrito(Principal principal) {
         Usuario user = clienteService.findByUsername(principal.getName());
-        List<Carrito> carritos = carritoRepository.findByIdUsuarioAndStatus(user.getId(), Carrito.ESTADO.PENDIENTE.name());
-        return ResponseEntity.ok(Collections.singletonMap("total", carritos.size()));
+       Integer cantidad = carritoRepository.obtenerCantidadCarritoXUsuarioId(user.getId());
+        return ResponseEntity.ok(Collections.singletonMap("total", cantidad));
     }
 
 }

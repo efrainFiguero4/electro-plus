@@ -15,6 +15,6 @@ import java.util.Optional;
 public interface CarritoRepository extends JpaRepository<Carrito, Long> {
     public List<Carrito> findByIdUsuarioAndStatus(Long idUsuario, String status);
 
-    @Query(value = "SELECT o FROM Carrito o WHERE o.idUsuario=?1 And o.producto=?2 And o.status='PENDIENTE'")
-    Optional<Carrito> findProformaByUsuarioAndProducto(Long usuario, Producto producto);
+    @Query(value = "SELECT COUNT(1) FROM Carrito o WHERE o.idUsuario=?1 AND o.status='PENDIENTE'")
+    public Integer obtenerCantidadCarritoXUsuarioId(Long idUsuario);
 }
