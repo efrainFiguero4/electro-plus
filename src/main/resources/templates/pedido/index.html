@@ -9,7 +9,8 @@
                 <div class="d-inline-flex align-items-center justify-content-between w-100 flex-wrap">
                     <div class="text-one electroplus__cabecera_title">Mis Pedidos</div>
                     <div class="d-inline-flex align-items-center">
-                        <form th:object="${filtro}" th:action="@{/pedidos}" class="d-inline-flex align-items-center pr-2">
+                        <form th:object="${filtro}" th:action="@{/pedidos}"
+                              class="d-inline-flex align-items-center pr-2">
                             <small class="text-one">Filtrar por: </small>
                             <input type="date" class="form-control form-control-sm mx-3"
                                    th:field="${filtro.fecha}" name="fecha"
@@ -29,15 +30,21 @@
         </div>
         <div class="col-12">
             <div class="accordion" id="accordionExample" th:if="${pagos.size()>0}">
-                <div class="card" th:each="pago,iter : ${pagos}">
+                <div class="card" th:id="'reporte'+${iter.index}" th:each="pago,iter : ${pagos}">
                     <div class="card-header" th:id="'header'+${iter.index}">
-                        <h2 class="mb-0">
+                        <h2 class="mb-0 d-inline-flex justify-content-between w-100">
                             <button class="btn btn-link btn-block text-left no-focus" type="button"
                                     style="color: #333c6d; background-color: transparent;"
                                     th:data-target="'#collapse'+${iter.index}"
                                     th:aria-controls="'collapse'+${iter.index}" data-toggle="collapse"
                                     aria-expanded="true"> Compra realizada el
-                                <i class="font-weight-bold" th:text="${pago.getFormatDate()}"></i>
+                                <i class="font-weight-bold" th:id="'fecha'+${iter.index}"
+                                   th:text="${pago.getFormatDate()}"></i>
+                            </button>
+                            <button th:onclick="|generarPdf('${iter.index}')|"
+                                    class="btn btn-sm btn-warning d-inline-flex align-items-center">
+                                <i class="feather icon-download pr-2"></i>
+                                <i class="font-weight-bold">Descargar</i>
                             </button>
                         </h2>
                     </div>
@@ -49,10 +56,12 @@
                             <div class="row no-gutters">
                                 <div class="col-12 col-sm-3 detalle py-3">
                                     <label class="titulo d-block">Forma de Pago</label>
-                                    <small class="descripcion d-block">Tarjeta Visa finalizada en <span th:text="${pago.finaliza()}"></span></small>
-                                    <small class="descripcion d-block"><span th:text="'S/. '+${pago.montoTotal}"></span>(1 cuota)</small>
+                                    <small class="descripcion d-block">Tarjeta Visa finalizada en <span
+                                            th:text="${pago.finaliza()}"></span></small>
+                                    <small class="descripcion d-block"><span th:text="'S/. '+${pago.montoTotal}"></span>(1
+                                        cuota)</small>
                                 </div>
-                                <div class="col-12 col-sm-3 detalle py-3">
+                                <div class="col-12 col-sm-3 detalle py-3" id="ignorePDF">
                                     <label class="titulo d-block">Dirección de Envío </label>
                                     <small class="descripcion d-block" th:text="${pago.direccion}"></small>
                                     <small class="descripcion d-block" th:text="${pago.nombreTarjeta}"></small>
@@ -87,15 +96,17 @@
                                 <div class="col-12 col-sm-4 col-md-3 px-2 item"
                                      th:each="carrito : ${pago.pedido.productos}">
                                     <div class="card border-0" style="min-height: 100% !important;">
-                                        <div class="d-flex justify-content-center">
+                                        <div class="d-flex justify-content-center card-body bg-white">
                                             <div class="card-imagen">
                                                 <img th:src="${carrito.producto.imagen}" class="card-img-top">
                                             </div>
                                         </div>
                                         <div class="card-body p-0">
-                                            <h5 class="card-title item-titulo text-uppercase text-truncate"
-                                                th:text="${carrito.producto.nombre}"></h5>
-                                            <p class="card-text item-descripcion text-truncate-2 pb-1"
+<!--                                            text-truncate-->
+                                            <div class="card-title item-titulo text-uppercase"
+                                                th:text="${carrito.producto.nombre}"></div>
+<!--                                            text-truncate-2-->
+                                            <p class="card-text item-descripcion pb-1"
                                                th:text="${carrito.producto.descripcion}"></p>
                                             <p class="item-descuento border-top pt-1" style="text-decoration: none"
                                                th:text="'PRECIO: S/. ' + ${carrito.producto.precio}"></p>
@@ -117,7 +128,6 @@
         </div>
     </div>
 </div>
-
 </body>
 
 </html>

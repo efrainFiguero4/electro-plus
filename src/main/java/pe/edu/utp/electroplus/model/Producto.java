@@ -51,4 +51,8 @@ public class Producto {
     @Transient
     private BigDecimal precioCarrito;
 
+    private String recortar(){
+        return this.nombre.
+    }
+
 }

@@ -112,3 +112,25 @@ const rest = (id, cantidad) => {
         });
     }, false);
 })();
+
+function generarPdf(id) {
+    var fecha = document.getElementById('fecha' + id).innerText;
+    var opt = {
+        margin: 0,
+        filename: 'pedido-' + fecha + '.pdf',
+        image: {type: 'jpeg', quality: 1},
+        pagebreak: [
+            {mode: ['avoid-all']}
+        ],
+        html2canvas: {scale: 2},
+        jsPDF: {
+            unit: 'mm',
+            format: [245, 315],
+            orientation: 'portrait',
+            floatPrecision: 'smart',
+            precision: 100
+        }
+    };
+    var element = document.getElementById('reporte' + id);
+    html2pdf(element, opt);
+}
