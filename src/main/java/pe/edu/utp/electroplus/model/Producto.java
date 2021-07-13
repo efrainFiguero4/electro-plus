@@ -52,7 +52,7 @@ public class Producto {
     private BigDecimal precioCarrito;
 
     private String recortar(){
-        return this.nombre.
+        return this.nombre;
     }
 
 }
