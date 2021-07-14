@@ -50,4 +50,6 @@ public class Usuario {
 
     @Transient
     private String confirmarpassword;
+
+    private Integer estado;
 }

@@ -11,6 +11,7 @@ import pe.edu.utp.electroplus.service.ClienteService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +24,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public List<Usuario> listarTodos() {
         List<Usuario> users = clienteRepository.findAll();
+        users = users.stream().filter(u -> u.getEstado() == 1).collect(Collectors.toList());
         users.forEach(u -> u.setCodigoRole(u.getRole().getCodigo()));
         return users;
     }
@@ -32,6 +34,7 @@ public class ClienteServiceImpl implements ClienteService {
         usuario.setPasswordencode(cryptPasswordEncoder.encode(usuario.getPassword()));
         String[] cr = usuario.getCodigoRole().split(",");
         usuario.setRole(roleRepository.findByCodigo(cr[cr.length - 1]));
+        usuario.setEstado(1);
         clienteRepository.save(usuario);
     }
 
@@ -42,7 +45,10 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void eliminar(Long id) {
-        clienteRepository.deleteById(id);
+        clienteRepository.findById(id).ifPresent(u -> {
+            u.setEstado(0);
+            clienteRepository.save(u);
+        });
     }
 
     @Override
