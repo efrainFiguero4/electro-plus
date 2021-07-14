@@ -93,7 +93,7 @@
                                     </div>
                                     <div style="color: #22C083;" th:text="${pago.status}"></div>
                                 </div>
-                                <div class="col-12 col-sm-4 col-md-3 px-2 item"
+                                <div class="col-12 col-sm-4 col-md-3 px-2 item" th:object="${carrito}"
                                      th:each="carrito : ${pago.pedido.productos}">
                                     <div class="card border-0" style="min-height: 100% !important;">
                                         <div class="d-flex justify-content-center card-body bg-white">
@@ -104,10 +104,10 @@
                                         <div class="card-body p-0">
 <!--                                            text-truncate-->
                                             <div class="card-title item-titulo text-uppercase"
-                                                th:text="${carrito.producto.nombre}"></div>
+                                                th:text="${carrito.producto.recortarnombre()}"></div>
 <!--                                            text-truncate-2-->
                                             <p class="card-text item-descripcion pb-1"
-                                               th:text="${carrito.producto.descripcion}"></p>
+                                               th:text="${carrito.producto.recortar()}"></p>
                                             <p class="item-descuento border-top pt-1" style="text-decoration: none"
                                                th:text="'PRECIO: S/. ' + ${carrito.producto.precio}"></p>
                                             <p class="item-descuento" style="text-decoration: none"

@@ -51,8 +51,10 @@ public class Producto {
     @Transient
     private BigDecimal precioCarrito;
 
-    private String recortar(){
-        return this.nombre;
+    public String recortar() {
+        return this.descripcion.substring(0, Math.min(this.descripcion.length(), 44)) + (this.descripcion.length() > 44 ? "..." : "");
     }
-
+    public String recortarnombre() {
+        return this.nombre.substring(0, Math.min(this.nombre.length(), 44)) + (this.nombre.length() > 44 ? "..." : "");
+    }
 }
